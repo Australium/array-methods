@@ -58,6 +58,8 @@ const users = [
   },
 ];
 
+console.log(users);
+
 let isNotAdult = users.filter((item) => item.age < 18);
 
 let foreignStudent = users.filter((item) => {
@@ -69,14 +71,42 @@ let foreignStudent = users.filter((item) => {
 console.log(isNotAdult);
 console.log(foreignStudent);
 
-let newUsers = users.slice();
+// let newUsers = users.slice();
 
-newUsers.forEach(function (item,index,array) {
-  item["isAdult"] = item.age >= 18;
-  item["averageMark"] = item.marks.reduce((acc, el) => {
-    return acc + el;
-  });
-  item["averageMark"] = item["averageMark"] / item.marks.length;
+// newUsers.forEach(function (item,index,array) {
+//   item["isAdult"] = item.age >= 18;
+//   item["averageMark"] = item.marks.reduce((acc, el) => {
+//     return acc + el;
+//   });
+//   item["averageMark"] = item["averageMark"] / item.marks.length;
+// });
+
+// newUsers.map(function (item,index,array) {
+//   item["isAdult"] = item.age >= 18;
+//   item["averageMark"] = item.marks.reduce((acc, el) => {
+//     return acc + el;
+//   });
+//   item["averageMark"] = item["averageMark"] / item.marks.length;
+// });
+
+let newUsers = users.map((item,index,array) => {
+  return {
+    name: item.name,
+
+    age: item.age,
+
+    address: {
+      country: item.address.country,
+
+      city: item.address.city,
+    },
+
+    marks: [item.marks],
+    isAdult: item.age >= 18,
+    averageMark: (item.marks.reduce((acc, el) => {
+          return acc + el;
+    }))/item.marks.length,
+  }
 });
 
 console.log(newUsers);
@@ -86,10 +116,10 @@ let averageMark = (newUsers.reduce((acc, elem,index,arr) => acc + elem['averageM
 console.log(averageMark);
 
 let addresses = {
-  countries: newUsers.map((item) => {
+  countries: users.map((item) => {
     return item.address.country;
   }),
-  cities: newUsers.map((item) => {
+  cities: users.map((item) => {
     return item.address.city;
   }),
 };
