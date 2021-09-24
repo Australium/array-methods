@@ -71,17 +71,17 @@ console.log(foreignStudent);
 
 let newUsers = users.slice();
 
-newUsers.forEach(function (item) {
+newUsers.forEach(function (item,index,array) {
   item["isAdult"] = item.age >= 18;
   item["averageMark"] = item.marks.reduce((acc, el) => {
     return acc + el;
   });
-  item["averageMark"] = item["averageMark"] / 2;
+  item["averageMark"] = item["averageMark"] / item.marks.length;
 });
 
 console.log(newUsers);
 
-let averageMark = (newUsers.reduce((acc, elem) => acc + elem['averageMark'],0))/2;
+let averageMark = (newUsers.reduce((acc, elem,index,arr) => acc + elem['averageMark'],0))/newUsers.length;
 
 console.log(averageMark);
 
@@ -95,3 +95,23 @@ let addresses = {
 };
 
 console.log(addresses);
+
+
+// 1.
+
+// newUsers.forEach(function (item) { item["isAdult"] = item.age >= 18; item["averageMark"] = item.marks.reduce((acc, el) => { return acc + el; }); item["averageMark"] = item["averageMark"] / 2;});
+
+// Крайне плохой вариант решения... проще и лучше решить через мап
+
+
+
+// 2.
+
+// newUsers.forEach(function (item) { item["isAdult"] = item.age >= 18; item["averageMark"] = item.marks.reduce((acc, el) => { return acc + el; }); item["averageMark"] = item["averageMark"] / 2;});
+
+// Почему делим на 2 ?
+
+
+
+// 3.let averageMark = (newUsers.reduce((acc, elem) => acc + elem['averageMark'],0))/2; Вот тут нужно работать с массивом users
+
