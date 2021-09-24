@@ -60,36 +60,20 @@ const users = [
 
 console.log(users);
 
-let isNotAdult = users.filter((item) => item.age < 18);
+let isNotAdult = users.filter(item => item.age < 18);
 
-let foreignStudent = users.filter((item) => {
-  if (item.address.country !== "Ukraine") {
-    return true;
-  }
-});
+let foreignStudent = users.filter(item => item.address.country !== "Ukraine");
+
+// let foreignStudent = users.filter((item) => {
+//   if (item.address.country !== "Ukraine") {
+//     return true;
+//   }
+// });
 
 console.log(isNotAdult);
 console.log(foreignStudent);
 
-// let newUsers = users.slice();
-
-// newUsers.forEach(function (item,index,array) {
-//   item["isAdult"] = item.age >= 18;
-//   item["averageMark"] = item.marks.reduce((acc, el) => {
-//     return acc + el;
-//   });
-//   item["averageMark"] = item["averageMark"] / item.marks.length;
-// });
-
-// newUsers.map(function (item,index,array) {
-//   item["isAdult"] = item.age >= 18;
-//   item["averageMark"] = item.marks.reduce((acc, el) => {
-//     return acc + el;
-//   });
-//   item["averageMark"] = item["averageMark"] / item.marks.length;
-// });
-
-let newUsers = users.map((item,index,array) => {
+let newUsers = users.map(item => {
   return {
     name: item.name,
 
@@ -101,7 +85,7 @@ let newUsers = users.map((item,index,array) => {
       city: item.address.city,
     },
 
-    marks: [item.marks],
+    marks: item.marks,
     isAdult: item.age >= 18,
     averageMark: (item.marks.reduce((acc, el) => {
           return acc + el;
@@ -111,37 +95,25 @@ let newUsers = users.map((item,index,array) => {
 
 console.log(newUsers);
 
-let averageMark = (newUsers.reduce((acc, elem,index,arr) => acc + elem['averageMark'],0))/newUsers.length;
+// let averageMark = (newUsers.reduce((acc, elem,index,arr) => acc + elem['averageMark'],0))/newUsers.length;
+
+let averageMark = (users.reduce((acc, elem,index,arr) => {
+  return acc + (elem.marks.reduce((ac, el) => {
+    return ac + el;
+},0))/elem.marks.length;
+},0))/users.length;
 
 console.log(averageMark);
 
-let addresses = {
-  countries: users.map((item) => {
-    return item.address.country;
-  }),
-  cities: users.map((item) => {
-    return item.address.city;
-  }),
-};
+// let addresses = {
+//   countries: users.map(item => item.address.country),
+//   cities: users.map(item => item.address.city),
+// };
+
+let addresses = users.reduce((acc,el,i,arr) => {
+  acc.countries.push(el.address.country);
+  acc.cities.push(el.address.city);
+  return acc;
+},{countries:[],cities:[]})
 
 console.log(addresses);
-
-
-// 1.
-
-// newUsers.forEach(function (item) { item["isAdult"] = item.age >= 18; item["averageMark"] = item.marks.reduce((acc, el) => { return acc + el; }); item["averageMark"] = item["averageMark"] / 2;});
-
-// Крайне плохой вариант решения... проще и лучше решить через мап
-
-
-
-// 2.
-
-// newUsers.forEach(function (item) { item["isAdult"] = item.age >= 18; item["averageMark"] = item.marks.reduce((acc, el) => { return acc + el; }); item["averageMark"] = item["averageMark"] / 2;});
-
-// Почему делим на 2 ?
-
-
-
-// 3.let averageMark = (newUsers.reduce((acc, elem) => acc + elem['averageMark'],0))/2; Вот тут нужно работать с массивом users
-
